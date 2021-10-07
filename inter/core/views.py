@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import ContatoForm
+from .forms import ContatoForm, ProdutoModelForm
 from django.contrib import messages
 
 # Create your views here.
@@ -24,4 +24,20 @@ def contato(request):
     return render(request, 'contato.html', context)
 
 def produto(request):
-    return render(request, 'produto.html')
+    if str(request.method) == 'POST':
+        form = ProdutoModelForm(request.POST, request.FILES)
+        if form.is_valid():
+            prod = form.save(commit=False)
+
+            print(prod.nome, prod.preco)
+
+            messages.success(request, 'Produto salvo com sucesso')
+            form = ProdutoModelForm()
+        else :
+            messages.error(request, 'Produto Erro!')
+    else :
+        form = ProdutoModelForm()
+    context = {
+        'form' : form
+    }
+    return render(request, 'produto.html', context)
