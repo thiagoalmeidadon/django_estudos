@@ -1,11 +1,16 @@
 from django.shortcuts import render
-from .forms import ContatoForm, ProdutoModelForm
 from django.contrib import messages
+
+from .forms import ContatoForm, ProdutoModelForm
+from .models import Produto
 
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    context = {
+        'produtos' : Produto.objects.all()
+    }
+    return render(request, 'index.html', context)
 
 def contato(request):
     form = ContatoForm(request.POST or None)
