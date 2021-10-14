@@ -1,1 +1,5 @@
+on Ubuntu:
+apt install libmysqlclient-dev
+
+on Python, PIP
 pip install django whitenoise gunicorn django-bootstrap4 PyMySQL django-stdimage
